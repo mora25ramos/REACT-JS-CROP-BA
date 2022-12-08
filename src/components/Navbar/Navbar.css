@@ -1,0 +1,44 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.9);
+    position: fixed;
+    top: 0;
+    padding: 25px 35px;
+    font-family: "Poppins", sans-serif ;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, .15);
+}
+
+.navbar__menus {
+    width: 90%;
+    list-style: none;
+    display: inline-block;
+    margin: 20px;
+}
+
+.navbar__menu {
+    color: #ffffff;
+    margin: 5%;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+.navbar__categorias{
+    background-color: rgba(0, 0, 0, 0.4);
+    width: auto;
+    display: flex;
+    list-style: none;
+    text-align: center;
+}
+
+.navbar__categoria{
+    display: inline-block;
+    color: #ffffff;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    margin: 10px 30px;
+}
+
