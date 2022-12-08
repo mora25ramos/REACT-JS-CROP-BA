@@ -1,27 +1,31 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import CartWidget from '../CartWidget/CartWidget'
+import './Navbar.css'
 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-
-function ColorSchemesExample() {
+const NavBar =({menus, categorias})=> {
   return (
-    <>
-      <Navbar bg="light" variant="light">
-        <Container>
-          <Navbar.Brand href="#home">CROP BA</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Productos</Nav.Link>
-            <Nav.Link href="#pricing">Contacto</Nav.Link>
-          </Nav>
-        </Container>
-
+    <div className='navbar'>
+      <div className='navbar__menus'>
+      { 
+        menus.map ((menu)=>{
+        return <Link className='navbar__menu' to={menu.href}> {menu.name} </Link>
+        })
+      }
+      </div>
+      <div className='navbar__categorias'>
+      {
+        categorias.map ((categoria)=>{
+          return <Link className='navbar__categoria' to={`/Category/${categoria.id}`}> {categoria.name} </Link>
+        })
+      }
+      </div>
+      <div>
         <CartWidget />
-      </Navbar>
-    </>
-  );
+      </div>
+    </div> 
+  )
 }
 
-export default ColorSchemesExample;
+export default NavBar
+
