@@ -1,7 +1,21 @@
 .productName__link {
     text-align: center;
+    list-style: none;
     text-decoration: none;
     color: black;
     font-family: "Poppins", sans-serif ;
+}
+
+.item_container_productos {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.itemlistcontainer__productos li {
+    display: inline-block;
     list-style: none;
+    justify-content: space-between;
+    text-align: center;
 }

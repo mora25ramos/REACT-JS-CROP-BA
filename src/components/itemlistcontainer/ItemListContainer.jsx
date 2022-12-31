@@ -1,34 +1,57 @@
-import {useEffect, useState} from 'react'
-import {useParams} from 'react-router-dom'
-import {Productos, categorias} from '../mock'
-import Item from '../Item/Item'
-import './ItemListContainer.css'
+import React from "react";
+import { useState } from "react";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
+import { Productos, categorias } from "../mock";
+import Item from "../Item/Item";
+import "./ItemListContainer.css";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-const ItemListContainer = () =>{
-    const [item, setItem] = useState(Productos);
-    const { id } = useParams()
+const ItemListContainer = ({}) => {
+  const [item, setItem] = useState([]);
+  const [itemcopy, setItemCopy] = useState(item);
+  const { id } = useParams();
 
-    const FilterCategory = new Promise ((resolve, eject)=>{
-        const newProductos = Productos.filter ((p)=> p.category==id)
-        resolve(newProductos)
-    })
+  const FilterCategory = () => {
+    if (id && itemcopy) {
+      const newProductos = itemcopy.filter((p) => p.category == id);
+      return newProductos;
+    } else {
+      return itemcopy;
+    }
+  };
 
-    useEffect (()=>{
-        FilterCategory.then ((response)=>{
-            setItem (response)
-            console.log (response,item)
-        })
-    }, [id])
+  useEffect(() => {
+    const filtro = FilterCategory();
+    setItem(filtro);
+    console.log({ id, filtro });
+  }, [id]);
 
-    return (
-        <div className='itemlistcontainer'>
-            {
-                item && item.map ((producto)=>{
-                    return <Item producto={producto}/>
-                })
-            }
-        </div>
-    )
-}
+  useEffect(() => {
+    const db = getFirestore();
 
-export default ItemListContainer
+    const itemCollection = collection(db, "item");
+
+    getDocs(itemCollection).then((result) => {
+      setItem(result.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setItemCopy(result.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    });
+  }, []);
+
+  return (
+    <div>
+      {item &&
+        item.map((producto) => {
+          return <Item producto={producto} />;
+        })}
+    </div>
+  );
+};
+
+export default ItemListContainer;
